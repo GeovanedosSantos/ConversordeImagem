@@ -19,7 +19,7 @@ public class Main {
             System.err.println("Tipo de arquivo não suportado");
             return;
         }
-        System.out.println("Digite onde a nova Image será armazenada");
+        System.out.println("Digite onde a nova Imagem será armazenada");
         outputpath = scanner.nextLine();
         System.out.println("Digite o Nome do arquivo:");
         outputname = scanner.nextLine();
