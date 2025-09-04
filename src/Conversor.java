@@ -73,7 +73,7 @@ public class Conversor {
             outputdirectory = scanner.nextLine();
             File output = new File(outputdirectory);
             if (!output.exists()) {
-                System.out.println("Diretório Não Existe");
+                System.err.println("Diretório Não Existe");
             } else {
                 System.out.println("Digite o nome do arquivo");
                 outputfile = scanner.nextLine();
@@ -95,7 +95,7 @@ public class Conversor {
                 scanner.close();
                 return filetype;
             } else {
-                System.out.println("Formato de Arquivo não permitido");
+                System.err.println("Formato de Arquivo não permitido");
             }
         }
     }
