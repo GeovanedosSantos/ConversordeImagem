@@ -30,23 +30,18 @@ public class Conversor {
 
     public boolean validateFiletype(String filetype) {
         String[] formats = ImageIO.getReaderFormatNames();
-        for (String formato : formats) {
-            if (formato.equals(filetype)) {
-                return true;
-            }
-        }
-        return false;
+        return Arrays.asList(formats).contains(filetype);
+
     }
 
     public boolean validateInput(String inputpath) {
-        String[] formats = ImageIO.getReaderFormatNames();
-        for (String formato : formats) {
-            String formated = String.format(".%s", formato);
-            if (inputpath.endsWith(formated)) {
-                return true;
+            File input = new File(inputpath);
+            if(!input.exists() && !input.canRead()) {
+                return false;
             }
-        }
-        return false;
+            String[] formatos = ImageIO.getReaderFormatNames();
+            return Arrays.stream(formatos)
+                    .anyMatch(formato -> inputpath.endsWith("." + formato));
     }
 
     public String GetInput() {
@@ -55,15 +50,10 @@ public class Conversor {
         while (true) {
             System.out.println("Digite o Caminho Da Imagem");
             inputpath = scanner.nextLine();
-            try {
-                File input = new File(inputpath);
-                if (validateInput(inputpath) && input.exists() && input.canRead()) {
-                    return inputpath;
-                } else {
-                    System.err.println("Arquivo Inexistente ou formato não permitido");
-                }
-            } catch (SecurityException e) {
-                throw new RuntimeException(e);
+            if(validateInput(inputpath)) {
+                return inputpath;
+            } else {
+                System.err.println("Arquivo Inválido");
             }
         }
     }
@@ -76,12 +66,12 @@ public class Conversor {
             System.out.println("Digite o diretório onde a nova imagem irá ser armazenada");
             outputdirectory = scanner.nextLine();
             File output = new File(outputdirectory);
-            if (!output.exists()) {
-                System.err.println("Diretório Não Existe");
-            } else {
+            if (output.exists() && output.isDirectory()) {
                 System.out.println("Digite o nome do arquivo");
                 outputfile = scanner.nextLine();
                 break;
+            } else {
+                System.err.println("Diretório Não Existe");
             }
 
         }
