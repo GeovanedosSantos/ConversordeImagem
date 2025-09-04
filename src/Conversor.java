@@ -17,6 +17,7 @@ public class Conversor {
                 boolean sucess = ImageIO.write(imagem, filetype, outputfile);
                 if (sucess) {
                     System.out.println("Imagem convertida com sucesso");
+                    getInput();
 
                 } else {
                     System.out.println("A imagem não pode ser convertida");
@@ -29,7 +30,12 @@ public class Conversor {
 
     public boolean validateFiletype(String filetype) {
         String[] formats = ImageIO.getReaderFormatNames();
-        return Arrays.asList(formats).contains(filetype);
+        for(String formato : formats) {
+            if(filetype.equals(formato)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean validateInput(String inputpath) {
@@ -38,12 +44,16 @@ public class Conversor {
                 return false;
             }
             String[] formatos = ImageIO.getReaderFormatNames();
-            return Arrays.stream(formatos)
-                    .anyMatch(formato -> inputpath.endsWith("." + formato));
+            for(String formato : formatos) {
+                if(inputpath.endsWith("."+formato)) {
+                    return true;
+                }
+            }
+            return false;
     }
     public boolean validateOutput(String outputpath) {
         File output = new File(outputpath);
-        return output.exists() && output.isDirectory();
+        return output.isDirectory();
     }
 
     public String getInput() {
@@ -94,4 +104,3 @@ public class Conversor {
         }
     }
 }
-
