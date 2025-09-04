@@ -12,7 +12,6 @@ public class Conversor {
             BufferedImage imagem = ImageIO.read(inputfile);
             if (imagem == null) {
                 System.err.println("Imagem não Encontrada");
-
             } else {
                 File outputfile = new File(outputpath);
                 boolean sucess = ImageIO.write(imagem, filetype, outputfile);
@@ -31,20 +30,23 @@ public class Conversor {
     public boolean validateFiletype(String filetype) {
         String[] formats = ImageIO.getReaderFormatNames();
         return Arrays.asList(formats).contains(filetype);
-
     }
 
     public boolean validateInput(String inputpath) {
             File input = new File(inputpath);
-            if(!input.exists() && !input.canRead()) {
+            if(!input.exists() || !input.canRead()) {
                 return false;
             }
             String[] formatos = ImageIO.getReaderFormatNames();
             return Arrays.stream(formatos)
                     .anyMatch(formato -> inputpath.endsWith("." + formato));
     }
+    public boolean validateOutput(String outputpath) {
+        File output = new File(outputpath);
+        return output.exists() && output.isDirectory();
+    }
 
-    public String GetInput() {
+    public String getInput() {
         String inputpath;
         Scanner scanner = new Scanner(System.in);
         while (true) {
@@ -58,26 +60,24 @@ public class Conversor {
         }
     }
 
-    public String GetOutput() {
+    public String getOutput() {
         String outputfile;
         String outputdirectory;
         Scanner scanner = new Scanner(System.in);
         while (true) {
             System.out.println("Digite o diretório onde a nova imagem irá ser armazenada");
             outputdirectory = scanner.nextLine();
-            File output = new File(outputdirectory);
-            if (output.exists() && output.isDirectory()) {
+            if (validateOutput(outputdirectory)) {
                 System.out.println("Digite o nome do arquivo");
                 outputfile = scanner.nextLine();
                 break;
             } else {
                 System.err.println("Diretório Não Existe");
             }
-
         }
         return String.format("%s%s",outputdirectory,outputfile);
     }
-    public String GetFileType() {
+    public String getFileType() {
         String filetype;
         Scanner scanner = new Scanner(System.in);
         String[] formats = ImageIO.getReaderFormatNames();
