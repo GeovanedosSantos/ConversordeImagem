@@ -49,17 +49,21 @@ public class Conversor {
         return false;
     }
 
-    public String Getinput() {
+    public String GetInput() {
         String inputpath;
         Scanner scanner = new Scanner(System.in);
         while (true) {
             System.out.println("Digite o Caminho Da Imagem");
             inputpath = scanner.nextLine();
-            File input = new File(inputpath);
-            if (validateInput(inputpath) && input.exists() && input.canRead()) {
-                return inputpath;
-            } else {
-                System.err.println("Arquivo Inexistente ou formato não permitido");
+            try {
+                File input = new File(inputpath);
+                if (validateInput(inputpath) && input.exists() && input.canRead()) {
+                    return inputpath;
+                } else {
+                    System.err.println("Arquivo Inexistente ou formato não permitido");
+                }
+            } catch (SecurityException e) {
+                throw new RuntimeException(e);
             }
         }
     }
