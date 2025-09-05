@@ -17,7 +17,6 @@ public class Conversor {
                 boolean sucess = ImageIO.write(imagem, filetype, outputfile);
                 if (sucess) {
                     System.out.println("Imagem convertida com sucesso");
-                    getInput();
 
                 } else {
                     System.out.println("A imagem não pode ser convertida");
