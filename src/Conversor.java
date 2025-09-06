@@ -59,7 +59,7 @@ public class Conversor {
         String inputpath;
         Scanner scanner = new Scanner(System.in);
         while (true) {
-            System.out.println("Digite o Caminho Da Imagem");
+            System.out.println("Digite o Caminho Da Imagem:");
             inputpath = scanner.nextLine();
             if(validateInput(inputpath)) {
                 return inputpath;
@@ -74,10 +74,10 @@ public class Conversor {
         String outputdirectory;
         Scanner scanner = new Scanner(System.in);
         while (true) {
-            System.out.println("Digite o diretório onde a nova imagem irá ser armazenada");
+            System.out.println("Digite o diretório onde a nova imagem irá ser armazenada:");
             outputdirectory = scanner.nextLine();
             if (validateOutput(outputdirectory)) {
-                System.out.println("Digite o nome do arquivo");
+                System.out.println("Digite o nome do arquivo:");
                 outputfile = scanner.nextLine();
                 break;
             } else {
@@ -92,7 +92,7 @@ public class Conversor {
         String[] formats = ImageIO.getReaderFormatNames();
         while (true) {
             System.out.println(Arrays.toString(formats));
-            System.out.println("Digite o Tipo de arquivo");
+            System.out.println("Digite o Tipo de arquivo:");
             filetype = scanner.nextLine();
             if(validateFiletype(filetype)) {
                 scanner.close();
